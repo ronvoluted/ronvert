@@ -1,0 +1,15 @@
+*
+
+!.gitignore
+!package.json
+!package-lock.json
+!rollup.config.js
+!.prettierrc
+!README.md
+!LICENSE.txt
+
+!/src
+!/src/**
+!/public
+!/public/**
+/public/build
