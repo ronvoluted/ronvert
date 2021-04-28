@@ -3,6 +3,7 @@ import { elasticOut } from 'svelte/easing';
 
 let clientWidth;
 let value = 50;
+let focused;
 
 $: clipPos = 100 - value + '%';
 $: handlePos = clientWidth * (value / 100) + 'px';
@@ -15,14 +16,14 @@ let slide = () => ({
 </script>
 
 <!-- <div class="comparison" bind:clientWidth in:slide> -->
-<div class="comparison" bind:clientWidth>
+<div class="comparison" class:focused bind:clientWidth>
   <img class="before" src="./media/box-before.png" alt="Carboard box labelled 12 megabytes before conversion">
   <img class="after" src="./media/box-after.png" alt="Carboard box labelled 12 megabytes after conversion" style="clip-path: inset(0 {clipPos} 0 0)">
   <div class="slider">
     <div class="handle" style="transform: translateX({handlePos})" role="presentation">
       <img class="knob" src="./media/knob.svg" alt="" role="presentation">
     </div>
-    <input type="range" min="0" max="100" bind:value>
+    <input type="range" min="0" max="100" bind:value on:focus={() => focused = true} on:blur={() => focused = false}>
   </div>
 </div>
 
@@ -35,6 +36,12 @@ let slide = () => ({
   overflow: hidden;
   background-image: url('/media/convert-bg.png');
   box-shadow: 0.25rem 0.5rem 0.75rem hsl(0, 0%, 20%);
+}
+
+.comparison.focused {
+  outline: var(--outline);
+  outline-offset: var(--outline-offset);
+  transition: var(--outline-transition);
 }
 
 img {

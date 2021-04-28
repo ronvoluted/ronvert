@@ -8,6 +8,9 @@
   --secondary-light: hsl(198, 86%, 72%);
   --secondary-dark: hsl(210, 90%, 16%);
   font-size: 20px;
+  --outline: 0.2rem dashed var(--primary-dark);
+  --outline-offset: 0.25rem;
+  --outline-transition: outline-offset 0.25s ease-out;
 }
 
 html {
@@ -168,6 +171,8 @@ em {
   font-style: italic;
 }
 
-*:focus-visible {
-  outline: 0.2rem dashed var(--primary-dark);
+header a:focus-visible, button:focus-visible {
+  outline: var(--outline);
+  outline-offset: var(--outline-offset);
+  transition: var(--outline-transition);
 }
