@@ -22,7 +22,7 @@ onMount(() => {
   (() => {
     if ($reducedMotion) return;
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i <= 7; i++) {
       tocksAudio[i] = new Audio(`media/audio/tock-${i}.mp3`);
     }
 
