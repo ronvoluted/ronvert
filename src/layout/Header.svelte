@@ -68,6 +68,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 @media (min-width: 640px) {
@@ -79,6 +80,7 @@ a {
     flex-direction: row;
     justify-content: space-around;
     gap: 2rem;
+    width: auto;
   }
 }
 
