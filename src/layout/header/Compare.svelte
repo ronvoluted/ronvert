@@ -1,9 +1,12 @@
 <script>
+import { onMount } from 'svelte';
+
 import { elasticOut } from 'svelte/easing';
 
+let input;
 let clientWidth;
 let value = 50;
-let focused;
+let focused = false;
 
 $: clipPos = 100 - value + '%';
 $: handlePos = clientWidth * (value / 100) + 'px';
@@ -13,9 +16,14 @@ let slide = () => ({
   easing: elasticOut,
   tick: (t) => value = t * 50
 });
+
+const updateFocus = () => {
+  focused = window.getComputedStyle(input).getPropertyValue('--focused') === 'true';
+  console.log(focused);
+}
 </script>
 
-<!-- <div class="comparison" bind:clientWidth in:slide> -->
+<!-- <div class="comparison" class:focused  bind:clientWidth in:slide> -->
 <div class="comparison" class:focused bind:clientWidth>
   <img class="before" src="./media/box-before.png" alt="Carboard box labelled 12 megabytes before conversion">
   <img class="after" src="./media/box-after.png" alt="Carboard box labelled 12 megabytes after conversion" style="clip-path: inset(0 {clipPos} 0 0)">
@@ -23,7 +31,7 @@ let slide = () => ({
     <div class="handle" style="transform: translateX({handlePos})" role="presentation">
       <img class="knob" src="./media/knob.svg" alt="" role="presentation">
     </div>
-    <input type="range" min="0" max="100" bind:value on:focus={() => focused = true} on:blur={() => focused = false}>
+    <input bind:this={input} type="range" min="0" max="100" bind:value on:focus={updateFocus} on:blur={updateFocus}>
   </div>
 </div>
 
@@ -94,6 +102,7 @@ input {
   outline: none;
   appearance: none;
   background: none;
+  --focused: false;
 }
 input::-webkit-slider-thumb {
   height: 24rem;
@@ -102,11 +111,15 @@ input::-webkit-slider-thumb {
   visibility: hidden;
   cursor: col-resize;
 }
-input::-moz-range-thumb { /* Can't comma combine this with above selectors */
+input::-moz-range-thumb { /* Can't comma combine this with above selector */
   height: 24rem;
   width: 3rem;
   appearance: none;
   visibility: hidden;
   cursor: col-resize;
+}
+
+input:focus-visible {
+  --focused: true;
 }
 </style>
